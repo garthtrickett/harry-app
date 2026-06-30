@@ -11,4 +11,5 @@ export const migrationObjects: Record<string, Migration> = {
   "02_init_fitness_tables": { up: m01.up, down: m01.down }, // Remapped to run 3rd
   "03_add_hlc_columns": { up: m03.up, down: m03.down },
   "04_rename_to_fitness_tables": { up: m04.up, down: m04.down },
+  "05_onboarding_persistence": { up: m05.up, down: m05.down },
 };
