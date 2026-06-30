@@ -5,7 +5,7 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     ports:
-      - "6543:5432"
+      - "${POSTGRES_HOST_PORT:-7654}:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
