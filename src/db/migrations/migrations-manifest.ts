@@ -4,6 +4,7 @@ import * as m01 from "../../migrations/01_init_fitness_tables";
 import * as m02 from "../../migrations/02_user_preferences";
 import * as m03 from "../../migrations/03_add_hlc_columns";
 import * as m04 from "../../migrations/04_rename_to_fitness_tables";
+import * as m05 from "../../migrations/05_onboarding_persistence";
 
 export const migrationObjects: Record<string, Migration> = {
   "00_init_db": { up: m00.up, down: m00.down },
