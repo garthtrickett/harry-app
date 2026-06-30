@@ -185,19 +185,14 @@ describe("onboarding domain state machine", () => {
   });
 
   it("calculates completion percentage from valid completed steps only", () => {
-    const steps = [
-      completeStep("welcome_video", { confirmed: true }),
-      completeStep("health_waiver", {
-        accepted: false,
-        signatureName: "",
-        waiverVersion: ""
-      })
-    ];
+    const welcomeStep = completeStep("welcome_video", { confirmed: true });
+    const invalidWaiverStep = completeStep("health_waiver", {
+      accepted: false,
+      signatureName: "",
+      waiverVersion: ""
+    });
+    const steps = [welcomeStep, invalidWaiverStep];
 
-    const [welcomeStep, invalidWaiverStep] = steps;
-
-    expect(welcomeStep).toBeDefined();
-    expect(invalidWaiverStep).toBeDefined();
     expect(isOnboardingStepComplete(welcomeStep)).toBe(true);
     expect(isOnboardingStepComplete(invalidWaiverStep)).toBe(false);
     expect(getOnboardingCompletionPercentage(steps)).toBe(10);
