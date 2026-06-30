@@ -4,6 +4,7 @@ import { clientLog } from "./clientLog.ts";
 import { LocationService } from "./LocationService.ts";
 import "../../components/DashboardView.ts";
 import "../../components/LoginView.ts";
+import "../../components/OnboardingView.ts";
 import "../../components/SignupView.ts";
 
 const NotFoundView = (): ViewResult => ({
@@ -43,6 +44,12 @@ const loginView = (): ViewResult => {
   };
 };
 
+const onboardingView = (): ViewResult => {
+  return {
+    template: html`<onboarding-view></onboarding-view>`
+  };
+};
+
 const signupView = (): ViewResult => {
   return {
     template: html`<signup-view></signup-view>`
@@ -53,6 +60,11 @@ const routes: Route[] = [
   {
     pattern: /^\/$/,
     view: homeView,
+    meta: { requiresAuth: true },
+  },
+  {
+    pattern: /^\/onboarding$/,
+    view: onboardingView,
     meta: { requiresAuth: true },
   },
   {
