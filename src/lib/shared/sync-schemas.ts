@@ -1,0 +1,105 @@
+import { Schema } from "effect";
+
+export const CamelCaseReviewSchema = Schema.Struct({
+  exerciseId: Schema.UUID,
+  easeFactor: Schema.optional(Schema.Number).pipe(Schema.withDecodingDefault(() => 2.5)),
+  repetitions: Schema.Int,
+  intervalDays: Schema.optional(Schema.Int).pipe(Schema.withDecodingDefault(() => 0)),
+  nextReview: Schema.String,
+});
+
+export const SnakeCaseReviewSchema = Schema.Struct({
+  exercise_id: Schema.UUID,
+  ease_factor: Schema.optional(Schema.Number).pipe(Schema.withDecodingDefault(() => 2.5)),
+  repetitions: Schema.Int,
+  interval_days: Schema.optional(Schema.Int).pipe(Schema.withDecodingDefault(() => 0)),
+  next_review: Schema.String,
+});
+
+export const RecordReviewPayloadSchema = Schema.transform(
+  Schema.Union(CamelCaseReviewSchema, SnakeCaseReviewSchema),
+  Schema.Struct({
+    exerciseId: Schema.UUID,
+    easeFactor: Schema.Number,
+    repetitions: Schema.Int,
+    intervalDays: Schema.Int,
+    nextReview: Schema.String,
+  }),
+  {
+    decode: (input) => {
+      if ("exercise_id" in input) {
+        return {
+          exerciseId: input.exercise_id,
+          easeFactor: input.ease_factor,
+          repetitions: input.repetitions,
+          intervalDays: input.interval_days,
+          nextReview: input.next_review,
+        };
+      }
+      return {
+        exerciseId: input.exerciseId,
+        easeFactor: input.easeFactor,
+        repetitions: input.repetitions,
+        intervalDays: input.intervalDays,
+        nextReview: input.nextReview,
+      };
+    },
+    encode: (normalized) => ({
+      exerciseId: normalized.exerciseId,
+      easeFactor: normalized.easeFactor,
+      repetitions: normalized.repetitions,
+      intervalDays: normalized.intervalDays,
+      nextReview: normalized.nextReview,
+    }),
+  }
+);
+
+export type RecordReviewPayload = Schema.Schema.Type<typeof RecordReviewPayloadSchema>;
+
+export const UpdatePreferencesPayloadSchema = Schema.Struct({
+  dailyReviewLimit: Schema.Int.pipe(Schema.nonNegative()),
+  dailyNewExerciseLimit: Schema.Int.pipe(Schema.nonNegative()),
+  enforceMasteryLocks: Schema.optional(Schema.Boolean).pipe(Schema.withDecodingDefault(() => true)),
+});
+
+export type UpdatePreferencesPayload = Schema.Schema.Type<typeof UpdatePreferencesPayloadSchema>;
+
+export const ToggleSkinPayloadSchema = Schema.Unknown;
+export const UnlockDeckPayloadSchema = Schema.Unknown;
+
+export const RecordReviewTransactionSchema = Schema.Struct({
+  id: Schema.String,
+  type: Schema.Literal("record_review"),
+  payload: RecordReviewPayloadSchema,
+  hlc: Schema.String,
+});
+
+export const UpdatePreferencesTransactionSchema = Schema.Struct({
+  id: Schema.String,
+  type: Schema.Literal("update_preferences"),
+  payload: UpdatePreferencesPayloadSchema,
+  hlc: Schema.String,
+});
+
+export const ToggleSkinTransactionSchema = Schema.Struct({
+  id: Schema.String,
+  type: Schema.Literal("toggle_skin"),
+  payload: ToggleSkinPayloadSchema,
+  hlc: Schema.String,
+});
+
+export const UnlockDeckTransactionSchema = Schema.Struct({
+  id: Schema.String,
+  type: Schema.Literal("unlock_deck"),
+  payload: UnlockDeckPayloadSchema,
+  hlc: Schema.String,
+});
+
+export const OutboxTransactionSchema = Schema.Union(
+  RecordReviewTransactionSchema,
+  UpdatePreferencesTransactionSchema,
+  ToggleSkinTransactionSchema,
+  UnlockDeckTransactionSchema
+);
+
+export type OutboxTransaction = Schema.Schema.Type<typeof OutboxTransactionSchema>;
