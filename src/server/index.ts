@@ -10,6 +10,7 @@ import { effectPlugin } from "./middleware/effect-plugin";
 import { authRoutes } from "./routes/auth";
 import { syncRoutes } from "./routes/sync.ts";
 import { aiRoutes } from "./routes/fitnessAi";
+import { onboardingRoutes } from "./routes/onboarding.ts";
 import { db } from "../db/client";
 import { seedDb } from "../db/seed";
 import { serverRuntime } from "../lib/server/server-runtime";
@@ -40,6 +41,7 @@ export const app = new Elysia()
   .use(authRoutes)
   .use(syncRoutes)
   .use(aiRoutes)
+  .use(onboardingRoutes)
   .use(cors({
     origin: [
       /localhost.*/,
