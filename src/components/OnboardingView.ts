@@ -5,6 +5,7 @@ import {
   acceptOnboardingHealthWaiver,
   completeOnboardingStep,
   getCurrentOnboardingStep,
+  getCurrentOnboardingStepDefinition,
   getOnboardingProgressPercentage,
   getOnboardingResumeStepId,
   loadOnboarding,
