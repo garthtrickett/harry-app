@@ -354,10 +354,21 @@ export class OnboardingView extends LitElement {
         <p class="mt-3 text-sm leading-6 text-zinc-400">
           Start here. This video sets the tone: consistency over perfection, a repeatable rhythm, and a clear path toward changing your body and your life.
         </p>
-        <div class="mt-5 rounded-2xl border border-dashed border-zinc-700 bg-zinc-900/60 p-6 text-center">
-          <p class="text-sm font-medium text-zinc-100">Welcome to Harry App</p>
-          <p class="mt-2 text-xs text-zinc-500">Video placeholder · add hosted video URL in the content pass</p>
+        <div class="mt-5 overflow-hidden rounded-2xl border border-zinc-800 bg-black">
+          <div class="relative aspect-video w-full">
+            <iframe
+              class="absolute inset-0 h-full w-full"
+              src="https://www.youtube-nocookie.com/embed/lVGauP0N7gY?rel=0&modestbranding=1"
+              title="Harry App welcome video"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
         </div>
+        <p class="mt-2 text-xs text-zinc-500">
+          Video link: https://youtu.be/lVGauP0N7gY
+        </p>
         ${this.renderStepActions(stepId, payload, "I watched this — continue")}
       </section>
     `;
