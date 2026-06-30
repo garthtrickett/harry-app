@@ -2,17 +2,30 @@ import { effect } from "@preact/signals-core";
 import { LitElement, html, nothing } from "lit";
 import { customElement } from "lit/decorators.js";
 import {
+  acceptOnboardingHealthWaiver,
+  completeOnboardingStep,
   getCurrentOnboardingStep,
-  getCurrentOnboardingStepDefinition,
   getOnboardingProgressPercentage,
   getOnboardingResumeStepId,
   loadOnboarding,
   onboardingState,
+  saveOnboardingStepDraft,
+  submitOnboardingPart1,
   type ClientOnboardingReadModel
 } from "../lib/client/stores/onboardingStore.ts";
 import { clientLog } from "../lib/client/clientLog.ts";
 import { runClientUnscoped } from "../lib/client/runtime.ts";
-import { ONBOARDING_STEPS, type OnboardingStepStatus } from "../lib/shared/onboarding.ts";
+import { ONBOARDING_STEPS, type OnboardingStepId, type OnboardingStepStatus } from "../lib/shared/onboarding.ts";
+import {
+  buildHealthWaiverPayload,
+  buildInitialQaPayload,
+  buildNextStepsPayload,
+  buildRhythmForSuccessPayload,
+  buildWelcomeVideoPayload,
+  draftBoolean,
+  draftString,
+  type OnboardingPart1Draft
+} from "./onboardingPart1Payloads.ts";
 
 export const stepStatusLabel = (status: OnboardingStepStatus): string => {
   if (status === "complete") return "Complete";

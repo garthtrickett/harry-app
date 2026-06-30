@@ -277,3 +277,110 @@ export const loadOnboarding = () =>
     );
     setOnboardingReady(readModel);
   });
+
+const postOnboardingReadModel = (
+  path: string,
+  body?: Record<string, unknown>
+) =>
+  Effect.gen(function* () {
+    yield* clientLog("info", `[OnboardingStore] Posting onboarding mutation to ${path}.`);
+
+    const token = getAuthToken();
+    if (!token) {
+      yield* clientLog("warn", `[OnboardingStore] Cannot post ${path} without an active JWT.`);
+      setOnboardingError("You need to log in before onboarding can be updated.");
+      return null;
+    }
+
+    const responseResult = yield* Effect.tryPromise({
+      try: () =>
+        fetch(path, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          },
+          body: body ? JSON.stringify(body) : undefined
+        }),
+      catch: (cause) => new Error(`Onboarding mutation connection failed: ${String(cause)}`)
+    }).pipe(Effect.either);
+
+    if (responseResult._tag === "Left") {
+      yield* clientLog("error", `[OnboardingStore] Mutation network failure: ${responseResult.left.message}`);
+      setOnboardingError(responseResult.left.message);
+      return null;
+    }
+
+    const response = responseResult.right;
+    yield* clientLog("debug", `[OnboardingStore] ${path} returned HTTP ${response.status}`);
+
+    if (!response.ok) {
+      const message = yield* readErrorMessage(response);
+      yield* clientLog("warn", `[OnboardingStore] Server rejected onboarding mutation: ${message}`);
+      setOnboardingError(message);
+      return null;
+    }
+
+    const jsonResult = yield* Effect.tryPromise({
+      try: () => response.json() as Promise<unknown>,
+      catch: (cause) => new Error(`Failed to parse onboarding mutation response: ${String(cause)}`)
+    }).pipe(Effect.either);
+
+    if (jsonResult._tag === "Left") {
+      yield* clientLog("error", `[OnboardingStore] ${jsonResult.left.message}`);
+      setOnboardingError(jsonResult.left.message);
+      return null;
+    }
+
+    const readModel = parseOnboardingApiReadModel(jsonResult.right);
+    if (!readModel) {
+      yield* clientLog("error", "[OnboardingStore] Mutation response shape was invalid.");
+      setOnboardingError("The onboarding response was not in the expected format.");
+      return null;
+    }
+
+    yield* clientLog(
+      "info",
+      `[OnboardingStore] Mutation updated onboarding to status ${readModel.derivedStatus} at step ${readModel.nextIncompleteStepId}.`
+    );
+    setOnboardingReady(readModel);
+    return readModel;
+  });
+
+export const saveOnboardingStepDraft = (
+  stepId: OnboardingStepId,
+  payload: Record<string, unknown>
+) =>
+  Effect.gen(function* () {
+    yield* clientLog("info", `[OnboardingStore] Saving onboarding draft for ${stepId}.`);
+    return yield* postOnboardingReadModel(`/api/onboarding/steps/${stepId}/draft`, { payload });
+  });
+
+export const completeOnboardingStep = (
+  stepId: OnboardingStepId,
+  payload: Record<string, unknown>
+) =>
+  Effect.gen(function* () {
+    yield* clientLog("info", `[OnboardingStore] Completing onboarding step ${stepId}.`);
+    return yield* postOnboardingReadModel(`/api/onboarding/steps/${stepId}/complete`, { payload });
+  });
+
+export const acceptOnboardingHealthWaiver = (
+  signatureName: string,
+  waiverVersion: string,
+  deviceMetadata?: Record<string, unknown>
+) =>
+  Effect.gen(function* () {
+    yield* clientLog("info", "[OnboardingStore] Accepting onboarding health waiver.");
+    return yield* postOnboardingReadModel("/api/onboarding/waiver/accept", {
+      signatureName,
+      waiverVersion,
+      deviceMetadata: deviceMetadata ?? null
+    });
+  });
+
+export const submitOnboardingPart1 = () =>
+  Effect.gen(function* () {
+    yield* clientLog("info", "[OnboardingStore] Submitting onboarding Part 1.");
+    return yield* postOnboardingReadModel("/api/onboarding/submit-part-1");
+  });
