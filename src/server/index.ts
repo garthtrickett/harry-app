@@ -77,12 +77,32 @@ export const app = new Elysia()
     if (existsSync("./dist/index.html")) {
       return Bun.file("./dist/index.html");
     }
-    return "Development Server: Build output is not present in `./dist`. Use the Vite dev server on port 3000.";
+    return "Development Server: Build output is not present in `./dist`. Use the Vite dev server on port 3100.";
   });
+
+export const getServerPortFromEnv = (environment: Record<string, string | undefined>): number => {
+  const platformPort = environment.PORT;
+  if (platformPort && platformPort.trim().length > 0) {
+    const parsedPlatformPort = Number.parseInt(platformPort, 10);
+    if (Number.isFinite(parsedPlatformPort) && parsedPlatformPort > 0) {
+      return parsedPlatformPort;
+    }
+  }
+
+  const backendPort = environment.BACKEND_PORT;
+  if (backendPort && backendPort.trim().length > 0) {
+    const parsedBackendPort = Number.parseInt(backendPort, 10);
+    if (Number.isFinite(parsedBackendPort) && parsedBackendPort > 0) {
+      return parsedBackendPort;
+    }
+  }
+
+  return 42169;
+};
 
 if (process.env.NODE_ENV !== "test") {
   
-  const port = process.env.BACKEND_PORT ? parseInt(process.env.BACKEND_PORT) : 42169;
+  const port = getServerPortFromEnv(process.env);
 
   const startupEffect = Effect.gen(function* () {
     const gpCountResult = yield* Effect.tryPromise({
