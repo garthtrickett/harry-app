@@ -14,7 +14,7 @@ import { clientLog } from "../lib/client/clientLog.ts";
 import { runClientUnscoped } from "../lib/client/runtime.ts";
 import { ONBOARDING_STEPS, type OnboardingStepStatus } from "../lib/shared/onboarding.ts";
 
-const stepStatusLabel = (status: OnboardingStepStatus): string => {
+export const stepStatusLabel = (status: OnboardingStepStatus): string => {
   if (status === "complete") return "Complete";
   if (status === "in_progress") return "In progress";
   return "Not started";
