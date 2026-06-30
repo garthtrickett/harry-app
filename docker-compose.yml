@@ -50,7 +50,8 @@ services:
 
   otel-collector:
     image: otel/opentelemetry-collector-contrib:latest
-    container_name: calisthenics-wizard-otel-collector-local
+    
+    container_name: harry-app-otel-collector-local
     command: ["--config=/etc/otel-collector-config.yaml"]
     volumes:
       - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml

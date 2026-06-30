@@ -32,7 +32,8 @@
           ];
 
           shellHook = ''
-                        echo "🚀 Calisthenics Wizard Development Environment Loaded"
+                        
+                        echo "🚀 Harry App Development Environment Loaded"
             echo "Bun: $(bun --version)"
             echo "Node: $(node --version)"
             

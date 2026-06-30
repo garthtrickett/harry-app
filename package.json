@@ -1,5 +1,6 @@
 {
-    "name": "calisthenics-wizard",
+    
+    "name": "harry-app",
   "description": "A local-first calisthenics progression tracker and workout planner.",
   "type": "module",
   "version": "0.1.0",
