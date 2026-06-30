@@ -384,3 +384,9 @@ export const submitOnboardingPart1 = () =>
     yield* clientLog("info", "[OnboardingStore] Submitting onboarding Part 1.");
     return yield* postOnboardingReadModel("/api/onboarding/submit-part-1");
   });
+
+export const submitOnboardingPart2 = () =>
+  Effect.gen(function* () {
+    yield* clientLog("info", "[OnboardingStore] Submitting onboarding Part 2.");
+    return yield* postOnboardingReadModel("/api/onboarding/submit-part-2");
+  });
