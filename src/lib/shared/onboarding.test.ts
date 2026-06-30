@@ -194,8 +194,12 @@ describe("onboarding domain state machine", () => {
       })
     ];
 
-    expect(isOnboardingStepComplete(steps[0])).toBe(true);
-    expect(isOnboardingStepComplete(steps[1])).toBe(false);
+    const [welcomeStep, invalidWaiverStep] = steps;
+
+    expect(welcomeStep).toBeDefined();
+    expect(invalidWaiverStep).toBeDefined();
+    expect(isOnboardingStepComplete(welcomeStep)).toBe(true);
+    expect(isOnboardingStepComplete(invalidWaiverStep)).toBe(false);
     expect(getOnboardingCompletionPercentage(steps)).toBe(10);
   });
 

@@ -15,11 +15,11 @@ export default {
   },
   middleware: [
     proxy("/api", {
-      target: "http://127.0.0.1:42069",
+      target: "http://127.0.0.1:42169",
       changeOrigin: true,
     }),
     proxy("/ws", {
-      target: "ws://127.0.0.1:42069",
+      target: "ws://127.0.0.1:42169",
       ws: true,
       changeOrigin: true,
     }),
