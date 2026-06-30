@@ -6,7 +6,8 @@
 
 # Root marketing and platform registration domain
 life-io.xyz {
-    reverse_proxy life-io-backend:42069
+    
+    reverse_proxy life-io-backend:42169
 }
 
 # On-Demand SSL configuration for dynamically generated subdomains (languages/tenants)

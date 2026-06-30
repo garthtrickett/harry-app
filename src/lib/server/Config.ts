@@ -17,8 +17,9 @@ export const config = {
   },
     s3: {
     bucketName: getEnvOrDefault("BUCKET_NAME", "life-io"),
-    publicAvatarUrl: getEnvOrDefault("PUBLIC_AVATAR_URL", "http://localhost:9000/life-io"),
-    endpointUrl: getEnvOrDefault("AWS_ENDPOINT_URL_S3", "http://localhost:9000"),
+    
+    publicAvatarUrl: getEnvOrDefault("PUBLIC_AVATAR_URL", "http://localhost:9100/life-io"),
+    endpointUrl: getEnvOrDefault("AWS_ENDPOINT_URL_S3", "http://localhost:9100"),
     accessKeyId: getEnvOrDefault("AWS_ACCESS_KEY_ID", "minioadmin"),
     secretAccessKey: getEnvOrDefault("AWS_SECRET_ACCESS_KEY", "minioadmin"),
     region: getEnvOrDefault("AWS_REGION", "us-east-1"),

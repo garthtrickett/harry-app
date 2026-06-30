@@ -55,8 +55,9 @@ export default defineConfig({
     ignoreHTTPSErrors: true,
         env: {
       DATABASE_URL: TEST_DB_URL,
-      PORT: "3001",
-      BACKEND_PORT: "42070",
+      
+      PORT: "3101",
+      BACKEND_PORT: "42170",
       VITE_SILENT_CLIENT_LOGGING: "true"
     }
   },

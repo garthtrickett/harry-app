@@ -49,8 +49,9 @@ export default {
       target: "es2022",
       tsconfig: "./tsconfig.json",
       define: {
-        "import.meta.env.VITE_API_BASE_URL": JSON.stringify(process.env.VITE_API_BASE_URL || "http://127.0.0.1:42069"),
-        "import.meta.env.VITE_WS_URL": JSON.stringify(process.env.VITE_WS_URL || "ws://127.0.0.1:42069"),
+        
+        "import.meta.env.VITE_API_BASE_URL": JSON.stringify(apiBaseUrl),
+        "import.meta.env.VITE_WS_URL": JSON.stringify(wsBaseUrl),
         "import.meta.env.DEV": "true",
         "import.meta.env.PROD": "false",
         "import.meta.env.SSR": "false",

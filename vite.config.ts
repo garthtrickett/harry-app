@@ -71,9 +71,10 @@ export default defineConfig(({ command, mode }) => ({
       }
     })
   ],
-    server: {
+    
+  server: {
     host: true,
-    port: process.env.PORT ? parseInt(process.env.PORT) : 3000,
+    port: process.env.PORT ? parseInt(process.env.PORT) : 3100,
     allowedHosts: true,
     hmr: {
       clientPort: process.env.VITE_HMR_SECURE === "true" ? 443 : undefined,
@@ -81,11 +82,11 @@ export default defineConfig(({ command, mode }) => ({
     strictPort: true,
     proxy: {
       "/api": {
-        target: `http://127.0.0.1:${process.env.BACKEND_PORT || "42069"}`,
+        target: `http://127.0.0.1:${process.env.BACKEND_PORT || "42169"}`,
         changeOrigin: true,
       },
       "/ws": {
-        target: `ws://127.0.0.1:${process.env.BACKEND_PORT || "42069"}`,
+        target: `ws://127.0.0.1:${process.env.BACKEND_PORT || "42169"}`,
         ws: true,
         changeOrigin: true,
       }

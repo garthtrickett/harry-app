@@ -77,7 +77,8 @@ export const app = new Elysia()
   });
 
 if (process.env.NODE_ENV !== "test") {
-  const port = process.env.BACKEND_PORT ? parseInt(process.env.BACKEND_PORT) : 42069;
+  
+  const port = process.env.BACKEND_PORT ? parseInt(process.env.BACKEND_PORT) : 42169;
 
   const startupEffect = Effect.gen(function* () {
     const gpCountResult = yield* Effect.tryPromise({

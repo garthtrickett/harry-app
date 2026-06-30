@@ -81,7 +81,8 @@ const heavyMediaStrategy = new CacheFirst({
 });
 
 registerRoute(
-  ({ url }) => url.pathname.includes("/media/") || url.hostname.includes("r2.dev") || (url.hostname === "localhost" && url.port === "9000"),
+  
+  ({ url }) => url.pathname.includes("/media/") || url.hostname.includes("r2.dev") || (url.hostname === "localhost" && url.port === "9100"),
   heavyMediaStrategy
 );
 

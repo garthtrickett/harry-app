@@ -5,8 +5,10 @@ import { config } from "../../lib/server/Config";
 import type { Database } from "../../types";
 
 const getTenantUrl = (subdomain: string) => {
+  
   if (config.app.nodeEnv === "development") {
-    return `http://${subdomain}.localhost:3000`;
+    const localFrontendPort = process.env.PORT || "3100";
+    return `http://${subdomain}.localhost:${localFrontendPort}`;
   }
   return `https://${subdomain}.${config.app.rootDomain}`;
 };
