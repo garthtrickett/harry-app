@@ -13,6 +13,16 @@ import type ExerciseTable from "./generated/public/Exercise";
 import type { Exercise, NewExercise, ExerciseUpdate, ExerciseId } from "./generated/public/Exercise";
 import type UserPreferenceTable from "./generated/public/UserPreference";
 import type { UserPreference, NewUserPreference, UserPreferenceUpdate } from "./generated/public/UserPreference";
+import type ClientOnboardingTable from "./generated/public/ClientOnboarding";
+import type { ClientOnboarding, NewClientOnboarding, ClientOnboardingUpdate, ClientOnboardingId } from "./generated/public/ClientOnboarding";
+import type ClientOnboardingStepTable from "./generated/public/ClientOnboardingStep";
+import type { ClientOnboardingStep, NewClientOnboardingStep, ClientOnboardingStepUpdate, ClientOnboardingStepId } from "./generated/public/ClientOnboardingStep";
+import type ClientHealthWaiverAcceptanceTable from "./generated/public/ClientHealthWaiverAcceptance";
+import type { ClientHealthWaiverAcceptance, NewClientHealthWaiverAcceptance, ClientHealthWaiverAcceptanceUpdate, ClientHealthWaiverAcceptanceId } from "./generated/public/ClientHealthWaiverAcceptance";
+import type ClientOnboardingMediaTable from "./generated/public/ClientOnboardingMedia";
+import type { ClientOnboardingMedia, NewClientOnboardingMedia, ClientOnboardingMediaUpdate, ClientOnboardingMediaId } from "./generated/public/ClientOnboardingMedia";
+import type ClientNutritionGptSummaryTable from "./generated/public/ClientNutritionGptSummary";
+import type { ClientNutritionGptSummary, NewClientNutritionGptSummary, ClientNutritionGptSummaryUpdate, ClientNutritionGptSummaryId } from "./generated/public/ClientNutritionGptSummary";
 
 export type {
   Database,
@@ -21,5 +31,10 @@ export type {
   DeckTable, Deck, NewDeck, DeckUpdate, DeckId,
   ExerciseProgressTable, ExerciseProgress, NewExerciseProgress, ExerciseProgressUpdate, ExerciseProgressId,
   ExerciseTable, Exercise, NewExercise, ExerciseUpdate, ExerciseId,
-  UserPreferenceTable, UserPreference, NewUserPreference, UserPreferenceUpdate
+  UserPreferenceTable, UserPreference, NewUserPreference, UserPreferenceUpdate,
+  ClientOnboardingTable, ClientOnboarding, NewClientOnboarding, ClientOnboardingUpdate, ClientOnboardingId,
+  ClientOnboardingStepTable, ClientOnboardingStep, NewClientOnboardingStep, ClientOnboardingStepUpdate, ClientOnboardingStepId,
+  ClientHealthWaiverAcceptanceTable, ClientHealthWaiverAcceptance, NewClientHealthWaiverAcceptance, ClientHealthWaiverAcceptanceUpdate, ClientHealthWaiverAcceptanceId,
+  ClientOnboardingMediaTable, ClientOnboardingMedia, NewClientOnboardingMedia, ClientOnboardingMediaUpdate, ClientOnboardingMediaId,
+  ClientNutritionGptSummaryTable, ClientNutritionGptSummary, NewClientNutritionGptSummary, ClientNutritionGptSummaryUpdate, ClientNutritionGptSummaryId
 };
